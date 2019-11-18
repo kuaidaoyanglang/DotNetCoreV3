@@ -23,7 +23,9 @@ namespace Piano.NetCoreV3.Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddMvc();
             services.AddControllersWithViews();
+            services.AddRazorPages();//约等于MVC，3.0相当于把内容拆分的更细一些，更小的依赖
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,9 +50,15 @@ namespace Piano.NetCoreV3.Project
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                    name: "areas",
+                    areaName: "Admin",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();//终结点，可能是mvc，也可能是别的项目类型 Signalr
             });
         }
     }
