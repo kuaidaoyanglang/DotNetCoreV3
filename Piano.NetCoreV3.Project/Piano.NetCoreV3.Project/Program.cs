@@ -32,11 +32,19 @@ namespace Piano.NetCoreV3.Project
     /// 全新的管道模型：
     /// 默认情况，只有一个404
     /// 然后你就可以增加请求的处理（UseEndPoint），这就是以前的Handler。只包含业务处理
-    /// 
+    /// foreach (var component in _components.Reverse())//反转委托列表
+    ///{
+    ///    app = component(app);
+    ///    //委托3 404作为参数调用，返回委托3的内置动作-作为参数去调用委托（成为了委托2的参数）
+    ///    //最终得到委托1的内置参数
+    ///    //请求来了HttpContext，交给了委托1来完成
+    ///}
+    /// 其实RequestBuilder之后就是一个RequestDelegate
+    /// 默认情况下，管道是空的，就是404：可以根据你的诉求，任意的配置执行，一切全由开发者定制执行
     /// </summary>
     public class Program
     {
-        
+
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
